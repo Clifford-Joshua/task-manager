@@ -25,3 +25,5 @@ const auth = async (req, res, next) => {
     throw new UnAuthenticatedError("Authentication invalid");
   }
 };
+
+module.exports = auth;

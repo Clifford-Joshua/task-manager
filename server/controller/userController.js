@@ -2,13 +2,13 @@ const User = require("../model/userSchema");
 
 const { StatusCodes } = require("http-status-codes");
 
-const { BadRequestsError, UnAuthenticatedError } = require("../errors/index");
+const { BadRequestError, UnAuthenticatedError } = require("../errors/index");
 
 const getUsers = async (req, res) => {
   const users = await User.find({});
 
   if (users.length < 1) {
-    throw new BadRequestsError("No users are currently registered");
+    throw new BadRequestError("No users are currently registered");
   }
 
   res.status(StatusCodes.OK).json({ users, totalUsers: users.length });
@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    throw new BadRequestsError(
+    throw new BadRequestError(
       "Please name, email, and password field are required"
     );
   }
@@ -48,18 +48,18 @@ const deleteUser = async (req, res) => {
   // If not admin, owner must confirm password
   if (currentUser.role !== "admin") {
     if (!password) {
-      throw new BadRequestsError("Please provide your password");
+      throw new BadRequestError("Please provide your password");
     }
 
     const user = await User.findById(userId);
     if (!user) {
-      throw new BadRequestsError(`No user with id : ${userId}`);
+      throw new BadRequestError(`No user with id : ${userId}`);
     }
 
     const isPasswordCorrect = await user.comparePassword(password);
 
     if (!isPasswordCorrect) {
-      throw new BadRequestsError("Invalid credentials");
+      throw new BadRequestError("Invalid credentials");
     }
   }
 
@@ -69,39 +69,50 @@ const deleteUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  const { role } = req.body;
+  const currentUser = req.user;
   const { id: userId } = req.params;
+  const noFieldsToUpdate = !Object.keys(req.body).length;
 
-  const user = await User.findOneAndDelete({ _id: userId }, req.body, {
+  if (role && currentUser.role !== "admin") {
+    throw new BadRequestError("Users are not allowed to change their role.");
+  }
+
+  if (noFieldsToUpdate) {
+    throw new BadRequestError("Please provide at least one field to update.");
+  }
+
+  const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
     new: true,
     runValidators: true,
   });
 
   if (!user) {
-    throw new BadRequestsError(`Please no user with such Id : ${userId}`);
+    throw new BadRequestError(`No user found with id: ${userId}`);
   }
 
   res
     .status(StatusCodes.OK)
-    .json({ user, success: true, msg: "user details updated successful" });
+    .json({ user, success: true, msg: "User details updated successfully." });
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    throw new BadRequestsError("Please provide email and password");
+    throw new BadRequestError("Please provide email and password");
   }
 
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new BadRequestsError("Invalid credentials (email does not exist)");
+    throw new BadRequestError("Invalid credentials (email does not exist)");
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
 
   if (!isPasswordCorrect) {
-    throw new BadRequestsError("Invalid credentials (wrong password)");
+    throw new BadRequestError("Invalid credentials (wrong password)");
   }
 
   const token = user.createJWT();

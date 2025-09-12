@@ -2,7 +2,7 @@ const Task = require("../model/taskSchema");
 
 const { StatusCodes } = require("http-status-codes");
 
-const { BadRequestsError } = require("../errors");
+const { BadRequestError } = require("../errors");
 
 const getTask = async (req, res) => {
   const tasks = await Task.find({});
@@ -24,7 +24,7 @@ const createTask = async (req, res) => {
   const task = await Task.create({ ...req.body });
 
   if (createdDate < currentDate) {
-    throw new BadRequestsError("Due Date most be in the future");
+    throw new BadRequestError("Due Date most be in the future");
   }
 
   res
