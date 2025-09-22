@@ -13,11 +13,6 @@ const taskSchema = new mongoose.Schema(
       required: [true, "Please provided task description"],
     },
 
-    category: {
-      type: String,
-      default: "Others",
-      enum: ["Personal", "Others"],
-    },
     status: {
       type: String,
       default: "pending",
@@ -31,6 +26,20 @@ const taskSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "User",
       required: [true, "please provide user"],
+    },
+    executedBy: {
+      type: String,
+      default: "self",
+      enum: ["self", "others"],
+    },
+    assignedTo: {
+      type: String,
+      // required: [
+      //   function () {
+      //     return this.executedBy === "others";
+      //   },
+      //   "Please provide to whom the task is assigned",
+      // ],
     },
   },
   { timestamps: true }
