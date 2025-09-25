@@ -8,6 +8,7 @@ import {
 } from "../../../Features/useStateSlice";
 const CreateTask = () => {
   const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
   const [executedBy, setExecutedBy] = useState("other");
   const { isExecutedBySelf } = useSelector((store) => store.stateSlice);
 
