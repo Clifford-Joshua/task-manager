@@ -16,8 +16,8 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
-app.use("/users/", usersRouter);
-app.use("/api/v1/tasks/", auth, taskRouter);
+app.use("/users", usersRouter);
+app.use("/api/v1/tasks", auth, taskRouter);
 
 // middleware
 app.use(notFoundMiddleWare);
