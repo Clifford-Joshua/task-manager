@@ -2,6 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isSideBarOpen: false,
+  filterByStatus: "all",
+  isExecutedBySelf: false,
+  filterByExecutor: "all",
+  isCreateTaskModalOpen: false,
 };
 
 const useStateSlice = createSlice({
@@ -11,9 +15,35 @@ const useStateSlice = createSlice({
     toggleSideBar: (state) => {
       state.isSideBarOpen = !state.isSideBarOpen;
     },
+    closeSideBar: (state) => {
+      state.isSideBarOpen = false;
+    },
+    filterStatus: (state, action) => {
+      state.filterByStatus = action.payload;
+    },
+    filterExecutor: (state, action) => {
+      state.filterByExecutor = action.payload;
+    },
+    openCreateTaskModal: (state) => {
+      state.isCreateTaskModalOpen = true;
+    },
+    closeCreateTaskModal: (state) => {
+      state.isCreateTaskModalOpen = false;
+    },
+    toggleExecutedBySelf: (state) => {
+      state.isExecutedBySelf = !state.isExecutedBySelf;
+    },
   },
 });
 
-export const { toggleSideBar } = useStateSlice.actions;
+export const {
+  toggleSideBar,
+  closeSideBar,
+  filterExecutor,
+  filterStatus,
+  openCreateTaskModal,
+  closeCreateTaskModal,
+  toggleExecutedBySelf,
+} = useStateSlice.actions;
 
 export default useStateSlice.reducer;

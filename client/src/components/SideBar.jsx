@@ -8,7 +8,7 @@ import { FaTasks } from "react-icons/fa";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { MdSpaceDashboard } from "react-icons/md";
 
-import { toggleSideBar } from "../Features/useStateSlice";
+import { closeSideBar } from "../Features/useStateSlice";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const SideBar = () => {
     >
       <Link
         to={"/"}
-        onClick={() => dispatch(toggleSideBar())}
+        onClick={() => dispatch(closeSideBar())}
         className="text-white flex flex-col gap-[1rem] p-[1rem]"
       >
         <div className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer">
@@ -34,7 +34,7 @@ const SideBar = () => {
 
         <Link
           to={"/task"}
-          onClick={() => dispatch(toggleSideBar())}
+          onClick={() => dispatch(closeSideBar())}
           className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
         >
           <FaTasks className="text-[1.25rem]" />
@@ -44,19 +44,23 @@ const SideBar = () => {
 
         <div
           className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
-          onClick={() => dispatch(toggleSideBar())}
+          onClick={() => dispatch(closeSideBar())}
         >
           <RiLogoutBoxLine className="text-[1.3rem]" />
-          <button className="text-left text-[1.1rem]">LogOut</button>
+          <button className="text-left text-[1.1rem] cursor-pointer">
+            LogOut
+          </button>
         </div>
 
         <div
           className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
-          onClick={() => dispatch(toggleSideBar())}
+          onClick={() => dispatch(closeSideBar())}
         >
           <FaUser />
 
-          <button className="text-left text-[1.1rem]">Sign In</button>
+          <button className="text-left text-[1.1rem] cursor-pointer">
+            Sign In
+          </button>
         </div>
       </Link>
     </Wrapper>
