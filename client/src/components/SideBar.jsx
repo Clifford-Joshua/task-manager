@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { FaUser } from "react-icons/fa";
-import { FaTasks } from "react-icons/fa";
-import { RiLogoutBoxLine } from "react-icons/ri";
+import { FaTasks, FaUserEdit } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
+import { RiLogoutBoxLine } from "react-icons/ri";
 
 import { closeSideBar } from "../Features/useStateSlice";
 
@@ -21,16 +21,16 @@ const SideBar = () => {
         ${isSideBarOpen ? "translate-x-0 " : "translate-x-[-100%]"}
           `}
     >
-      <Link
-        to={"/"}
-        onClick={() => dispatch(closeSideBar())}
-        className="text-white flex flex-col gap-[1rem] p-[1rem]"
-      >
-        <div className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer">
+      <div className="text-white flex flex-col gap-[1rem] p-[1rem]">
+        <Link
+          to={"/"}
+          onClick={() => dispatch(closeSideBar())}
+          className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
+        >
           <MdSpaceDashboard className="text-[1.5rem]" />
 
           <h2 className=" text-[1.1rem] ">DashBoard</h2>
-        </div>
+        </Link>
 
         <Link
           to={"/task"}
@@ -52,17 +52,27 @@ const SideBar = () => {
           </button>
         </div>
 
-        <div
+        <Link
+          to={"/signup"}
           className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
           onClick={() => dispatch(closeSideBar())}
         >
           <FaUser />
 
-          <button className="text-left text-[1.1rem] cursor-pointer">
-            Sign In
-          </button>
-        </div>
-      </Link>
+          <h2 className="  text-[1.1rem]  ">Sign Up</h2>
+        </Link>
+
+        <Link
+          to={"/login"}
+          className="flex items-center gap-[1rem] py-[1rem] rounded-[10px]
+          transition duration-500 ease-in-out hover:text-black hover:bg-white
+          hover:px-[1.2rem] cursor-pointer"
+          onClick={() => dispatch(closeSideBar())}
+        >
+          <FaUserEdit />
+          <h2 className="  text-[1.1rem]  ">Login</h2>
+        </Link>
+      </div>
     </Wrapper>
   );
 };
