@@ -5,6 +5,7 @@ const initialState = {
   filterByStatus: "all",
   isExecutedBySelf: false,
   filterByExecutor: "all",
+  isUpdateTaskModalOpen: false,
   isCreateTaskModalOpen: false,
 };
 
@@ -33,6 +34,9 @@ const useStateSlice = createSlice({
     toggleExecutedBySelf: (state) => {
       state.isExecutedBySelf = !state.isExecutedBySelf;
     },
+    toggleUpdateTaskModal: (state) => {
+      state.isUpdateTaskModalOpen = !state.isUpdateTaskModalOpen;
+    },
   },
 });
 
@@ -44,6 +48,7 @@ export const {
   openCreateTaskModal,
   closeCreateTaskModal,
   toggleExecutedBySelf,
+  toggleUpdateTaskModal,
 } = useStateSlice.actions;
 
 export default useStateSlice.reducer;

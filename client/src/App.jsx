@@ -5,7 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import SharedComponent from "./components/SharedComponent";
-import { Error, Dashboard, Task, Login, SignUp } from "./pages";
+import {
+  Error,
+  Dashboard,
+  Task,
+  Login,
+  SignUp,
+  ForgottenPassword,
+} from "./pages";
 
 const App = () => {
   return (
@@ -16,9 +23,10 @@ const App = () => {
         <Route path="/" element={<SharedComponent />}>
           <Route index element={<Dashboard />} />
           <Route path="/task" element={<Task />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
         </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgotten-password" element={<ForgottenPassword />} />
         <Route path="*" element={<Error />} />
       </Routes>
 

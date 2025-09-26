@@ -1,13 +1,12 @@
 import React from "react";
-import { Background, Form } from "./components";
+import { Form, Background } from "./component";
 import styled from "styled-components";
-
-const Login = () => {
+const ForgottenPassword = () => {
   return (
     <Wrapper>
       <div className="flex min-h-[100vh]">
-        <Form />
         <Background />
+        <Form />
       </div>
     </Wrapper>
   );
@@ -15,4 +14,4 @@ const Login = () => {
 
 const Wrapper = styled.div``;
 
-export default Login;
+export default ForgottenPassword;

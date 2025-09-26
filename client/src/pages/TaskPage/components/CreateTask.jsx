@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   toggleExecutedBySelf,
   closeCreateTaskModal,
 } from "../../../Features/useStateSlice";
+
 const CreateTask = () => {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
