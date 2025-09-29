@@ -120,10 +120,31 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 };
 
+const forgottenPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new BadRequestError("Please provide email");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new BadRequestError("invalid credentials (email does not exist)");
+  }
+
+  const token = user.createJWT();
+
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "Login successful", token, user: { name: user.name } });
+};
+
 module.exports = {
   getUsers,
   createUser,
   deleteUser,
   updateUser,
+  forgottenPassword,
   login,
 };
