@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const notFoundMiddleWare = require("./middleware/notFound");
 const errorHandlerMiddleWare = require("./middleware/errorHandler");
@@ -13,6 +14,14 @@ const usersRouter = require("./router/users");
 const auth = require("./middleware/authenticationMiddleware");
 
 const port = process.env.PORT || 5000;
+
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://clifford-joshua.netlify.app"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
 
