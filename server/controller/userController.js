@@ -23,7 +23,13 @@ const createUser = async (req, res) => {
     );
   }
 
-  const user = await User.create({ ...req.body });
+  // check if it's first user
+  const firstUser = (await User.countDocuments({})) === 0;
+
+  const user = await User.create({
+    ...req.body,
+    role: firstUser ? "admin" : "user",
+  });
 
   const token = user.createJWT();
 

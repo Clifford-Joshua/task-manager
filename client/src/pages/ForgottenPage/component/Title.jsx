@@ -15,7 +15,7 @@ const Title = () => {
       {/* ======================================================================== */}
       {/* Login */}
       <div className="flex flex-col gap-[0.3rem] text-center">
-        <h2 className="font-bold text-[1.6rem]">Input Your Username</h2>
+        <h2 className="font-bold text-[1.6rem]">Input Your Email</h2>
         <p className="text-gray-600">Seems you forgot your password..</p>
       </div>
     </Wrapper>

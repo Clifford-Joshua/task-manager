@@ -3,7 +3,7 @@ import ScrollToTop from "./ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import ProtectedRoute from "./utils/ProtectedRoutes";
 import SharedComponent from "./components/SharedComponent";
 import {
   Error,
@@ -21,8 +21,22 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<SharedComponent />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/task" element={<Task />} />
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/task"
+            element={
+              <ProtectedRoute>
+                <Task />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
