@@ -33,13 +33,8 @@ const taskSchema = new mongoose.Schema(
       enum: ["self", "others"],
     },
     assignedTo: {
-      type: String,
-      // required: [
-      //   function () {
-      //     return this.executedBy === "others";
-      //   },
-      //   "Please provide to whom the task is assigned",
-      // ],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   { timestamps: true }
