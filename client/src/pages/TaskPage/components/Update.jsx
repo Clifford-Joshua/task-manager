@@ -26,15 +26,23 @@ const Update = () => {
         <form className="flex flex-col gap-[1rem]">
           {/* =========================================================================== */}
           {/* Status */}
-          <div className="flex flex-col gap-[0.5rem]">
-            <label htmlFor="taskName" className="font-bold capitalize">
+
+          <div className="flex flex-col gap-[0.5rem] ">
+            <label htmlFor="assignedTo" className="font-bold capitalize">
               Status :
             </label>
-            <input
-              type="text"
-              name="taskName"
-              className="border border-gray-200 rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
-            />
+            <select
+              name="status"
+              // value={taskDetails.assignedTo}
+              // onChange=
+              className="p-[0.5rem] rounded-[5px] bg-white border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black-500 w-[100%] focus:border-black transition duration-300 ease-in-out "
+            >
+              <option value=""></option>
+              <option value="pending">Pending</option>
+              <option value="in progress">In Progress</option>
+              <option value="rejected">Rejected</option>
+              <option value="completed">Completed</option>
+            </select>
           </div>
 
           {/* =========================================================================== */}
