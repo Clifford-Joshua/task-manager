@@ -10,8 +10,8 @@ const getTask = async (req, res) => {
   const tasks = await Task.find({
     $or: [{ createdBy: req.user.userId }, { assignedTo: req.user.userId }],
   })
-    .populate("createdBy", "name ") // only include name
-    .populate("assignedTo", "name ")
+    .populate("createdBy", "name") 
+    .populate("assignedTo", "name")
     .sort("createdAt");
 
   res.status(StatusCodes.OK).json({ tasks, count: tasks.length });

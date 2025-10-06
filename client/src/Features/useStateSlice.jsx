@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  reRender: 0,
+  TotalTask: 0,
   isSideBarOpen: false,
   filterByStatus: "all",
-  isExecutedBySelf: false,
   filterByExecutor: "all",
   isUpdateTaskModalOpen: false,
   isCreateTaskModalOpen: false,
@@ -31,8 +32,11 @@ const useStateSlice = createSlice({
     closeCreateTaskModal: (state) => {
       state.isCreateTaskModalOpen = false;
     },
-    toggleExecutedBySelf: (state) => {
-      state.isExecutedBySelf = !state.isExecutedBySelf;
+    setReRender: (state) => {
+      state.reRender = Math.random() * 100000;
+    },
+    setTotalTask: (state, action) => {
+      state.reRender = action.payload;
     },
     toggleUpdateTaskModal: (state) => {
       state.isUpdateTaskModalOpen = !state.isUpdateTaskModalOpen;
@@ -45,9 +49,10 @@ export const {
   closeSideBar,
   filterExecutor,
   filterStatus,
+  setReRender,
+  setTotalTask,
   openCreateTaskModal,
   closeCreateTaskModal,
-  toggleExecutedBySelf,
   toggleUpdateTaskModal,
 } = useStateSlice.actions;
 
