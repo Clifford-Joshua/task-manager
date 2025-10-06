@@ -33,7 +33,7 @@ const taskSchema = new mongoose.Schema(
       enum: ["self", "others"],
     },
     assignedTo: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "User",
     },
   },
