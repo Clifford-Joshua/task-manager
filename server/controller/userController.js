@@ -11,7 +11,10 @@ const getUsers = async (req, res) => {
     throw new BadRequestError("No users are currently registered");
   }
 
-  res.status(StatusCodes.OK).json({ users, totalUsers: users.length });
+  res.status(StatusCodes.OK).json({
+    users: { name: users.name, email: users.email },
+    totalUsers: users.length,
+  });
 };
 
 const createUser = async (req, res) => {
