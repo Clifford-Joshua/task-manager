@@ -5,14 +5,14 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnAuthenticatedError } = require("../errors/index");
 
 const getUsers = async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}, "name email");
 
   if (users.length < 1) {
     throw new BadRequestError("No users are currently registered");
   }
 
   res.status(StatusCodes.OK).json({
-    users: { name: users.name, email: users.email },
+    users,
     totalUsers: users.length,
   });
 };

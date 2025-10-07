@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 
 const url = import.meta.env.VITE_Task_API_BACKEND_URL;
+const baseApi = import.meta.env.VITE_API_BACKEND_URL;
 
 const CreateTask = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const CreateTask = () => {
     description: "",
     assignedTo: "",
   });
+  const [user, setUser] = useState([]);
   const [Loading, setLoading] = useState(false);
   const [executedBy, setExecutedBy] = useState("others");
 
@@ -96,7 +98,37 @@ const CreateTask = () => {
     }
   };
 
-  useEffect(() => {});
+  const fetchUsers = async () => {
+    try {
+      const res = await axios(`${baseApi}/users`);
+
+      if (res.status !== 200) {
+        toast.error("Failed to fetch users");
+        return;
+      }
+
+      const { users } = res.data;
+
+      setUser(users);
+    } catch (err) {
+      // ✅ error toast
+
+      if (err.response) {
+        // Backend returned an error
+        toast.error(err.response.data.msg || "Something went wrong");
+      } else if (err.request) {
+        // No response from server
+        toast.error("No response from server. Please try again.");
+      } else {
+        // Other errors
+        toast.error("Network error. Please try again.");
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <Wrapper className="fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.5)] flex justify-center items-center">
@@ -179,7 +211,7 @@ const CreateTask = () => {
 
           {/* =========================================================================== */}
           {/* users */}
-          {executedBy === "others" && (
+          {user.length > 1 && executedBy === "others" && (
             <div className="flex flex-col gap-[0.5rem] ">
               <label htmlFor="assignedTo" className="font-bold capitalize">
                 Assigned To :
@@ -191,11 +223,13 @@ const CreateTask = () => {
                 className="p-[0.5rem] rounded-[5px] bg-white border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black-500 w-[100%] focus:border-black transition duration-300 ease-in-out "
               >
                 <option value=""></option>
-                <option value="James">James Done</option>
-                <option value="Peter">Peter Done</option>
-                <option value="Andrew">Andrew Done</option>
-                <option value="Paul">Paul Done</option>
-                <option value="Energy">Energy Done</option>
+                {user.map(({ name }, ind) => {
+                  return (
+                    <option value={name} key={ind}>
+                      {name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           )}
