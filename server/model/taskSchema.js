@@ -9,7 +9,7 @@ const taskSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      minlength: 15,
+      minlength: [15, "Please provide a description that adds your task"],
       maxlength: 1000,
       required: [true, "Please provide task description"],
     },
