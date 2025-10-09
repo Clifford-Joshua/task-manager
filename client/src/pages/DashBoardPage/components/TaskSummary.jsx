@@ -1,6 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 const TaskSummary = () => {
+  const { TotalTask } = useSelector((store) => store.stateSlice);
+
   return (
     <Wrapper>
       <div>
@@ -12,7 +15,7 @@ const TaskSummary = () => {
           <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-[1rem] mt-[1rem] text-white">
             <div className="flex border rounded-[10px] p-[1rem] justify-center items-end md:items-center gap-[0.5rem] bg-[#4B5563]">
               <h2 className="font-bold text-[1.1rem]">Total Task : </h2>
-              <p className="text-[1.2rem]"> 10 </p>
+              <p className="text-[1.2rem]">{TotalTask} </p>
             </div>
 
             <div className="flex border rounded-[10px] p-[1rem] justify-center items-end md:items-center gap-[0.5rem] bg-orange-400">

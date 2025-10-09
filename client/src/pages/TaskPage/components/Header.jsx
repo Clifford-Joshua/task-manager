@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openCreateTaskModal } from "../../../Features/useStateSlice";
 const Header = () => {
   const dispatch = useDispatch();
+  const { TotalTask } = useSelector((store) => store.stateSlice);
 
   return (
     <Wrapper>
       <div className="pt-[0.7rem] text-[1.05rem] md:text-[1.2rem] ">
         <div className="flex justify-between items-center">
           <h2 className="text-[0.95rem] md:text-[1rem] font-bold">
-            Total : 20
+            Total :{TotalTask}
           </h2>
 
           <button

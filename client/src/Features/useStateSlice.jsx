@@ -36,7 +36,7 @@ const useStateSlice = createSlice({
       state.reRender = Math.random() * 100000;
     },
     setTotalTask: (state, action) => {
-      state.reRender = action.payload;
+      state.TotalTask = action.payload;
     },
     toggleUpdateTaskModal: (state) => {
       state.isUpdateTaskModalOpen = !state.isUpdateTaskModalOpen;

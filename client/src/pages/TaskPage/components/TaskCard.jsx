@@ -6,13 +6,15 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
+import { CiNoWaitingSign } from "react-icons/ci";
 
 import {
   toggleUpdateTaskModal,
   setTotalTask,
+  setReRender,
 } from "../../../Features/useStateSlice";
 
-const url = import.meta.env.VITE_Task_API_BACKEND_URL;
+const url = import.meta.env.VITE_L0CAL_HOST_5000_Task_API_BACKEND_URL;
 
 const TaskCard = () => {
   const dispatch = useDispatch();
@@ -72,6 +74,38 @@ const TaskCard = () => {
     return "#008000";
   };
 
+  const handleDelete = async (Id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`${url}/tasks/${Id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const { msg } = res.data;
+
+      toast.success(msg);
+
+      dispatch(setReRender());
+    } catch (err) {
+      // ✅ error toast
+
+      if (err.response) {
+        // Backend returned an error
+        toast.error(err.response.data.msg || "Something went wrong");
+      } else if (err.request) {
+        // No response from server
+        toast.error("No response from server. Please try again.");
+      } else {
+        // Other errors
+        toast.error("Network error. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     HandleFetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,9 +123,11 @@ const TaskCard = () => {
             </p>
           </div>
         ) : (
+          TaskData &&
           TaskData.map(
             (
               {
+                _id,
                 title,
                 dueDate,
                 status,
@@ -103,8 +139,14 @@ const TaskCard = () => {
               ind
             ) => {
               const statusColor = Color(status);
+
+              const loginUser = localStorage.getItem("username");
+
+              const isDisabled = loginUser !== assignedTo.name;
+
               // ==============================================================================
               //  Task Card
+
               return (
                 <div
                   className="bg-white p-[1rem] rounded-[8px] flex flex-col gap-[0.5rem] md:gap-[0.9rem] shadow-md max-w-[500px]"
@@ -117,7 +159,7 @@ const TaskCard = () => {
                     {description}
                   </p>
 
-                  <div className="grid grid-cols-2  gap-[1rem] text-gray-700 text-[0.9rem] md:text-[1rem]">
+                  <div className="grid grid-cols-2  gap-[1rem] text-gray-700 text-[0.9rem] md:text-[1rem] mb-[1rem]">
                     <div>
                       <h3 className="font-bold">Date : </h3>
                       <p>{moment(createdAt).format("MMM Do YYYY")}</p>
@@ -138,20 +180,87 @@ const TaskCard = () => {
                       <p>{assignedTo.name}</p>
                     </div>
 
-                    <div>
+                    <div className="flex flex-col gap-[0.4rem]">
                       <h3 className="font-bold">Status : </h3>
                       <p
-                        className={`border w-max px-[0.4rem] rounded shadow-[_0_0_5px_1px_black] font-bold bg-[${statusColor}] font-bold text-black`}
+                        className={`border w-max px-[0.4rem] rounded shadow-[_0_0_5px_1px_black] font-bold  text-black capitalize`}
+                        style={{ backgroundColor: statusColor }}
                       >
                         {status}
                       </p>
                     </div>
+
+                    <button
+                      disabled={isDisabled}
+                      className={`border py-[0.6rem]  rounded-[10px] capitalize cursor-pointer   font-bold  transition duration-300 ease-in-out mt-auto flex items-center justify-center gap-[0.5rem]
+
+                  
+                      
+                      ${
+                        isDisabled
+                          ? "bg-gray-500 text-gray-800"
+                          : "bg-red-600 hover:bg-red-500 text-white"
+                      }
+                      `}
+                      onClick={() => handleDelete(_id)}
+                    >
+                      Delete
+                      {isDisabled && (
+                        <CiNoWaitingSign className="text-[1.2rem] text-black" />
+                      )}
+                    </button>
                   </div>
                   <button
-                    onClick={() => dispatch(toggleUpdateTaskModal())}
-                    className="border py-[0.6rem] mt-[1rem] rounded-[10px] capitalize cursor-pointer bg-black text-white font-bold hover:bg-gray-800 transition duration-300 ease-in-out"
+                    onClick={(e) => {
+                      if (isDisabled) return;
+                      dispatch(toggleUpdateTaskModal());
+
+                      // =======================================================
+                      // save current value on local storage
+                      const parentDiv = e.target.parentElement;
+                      const childListElements = parentDiv.children;
+                      const title = childListElements[0].textContent;
+                      const description = childListElements[1].textContent;
+
+                      // ============================================================================
+                      // get the children element of the div containing status,due date
+
+                      const statusDueDateChild = childListElements[2].children;
+
+                      const dueDate =
+                        statusDueDateChild[0].children[1].textContent;
+                      const status =
+                        statusDueDateChild[4].children[1].textContent;
+
+                      // ================================================================
+                      // convert due date to string format
+                      const convertedDate = moment(
+                        `${dueDate}`,
+                        "MMM Do YYYY"
+                      ).format("YYYY-MM-DD");
+
+                      // ===================================================================
+                      // set localstorage
+                      localStorage.setItem("title", title);
+                      localStorage.setItem("description", description);
+                      localStorage.setItem("status", status);
+                      localStorage.setItem("dueDate", convertedDate);
+                      localStorage.setItem("Id", _id);
+                    }}
+                    className={`border py-[0.6rem]  rounded-[10px] capitalize cursor-pointer   font-bold  transition duration-300 ease-in-out mt-auto flex items-center justify-center gap-[0.5rem]
+                      
+                      ${
+                        isDisabled
+                          ? "bg-gray-500 text-gray-800"
+                          : "bg-black hover:bg-gray-800 text-white"
+                      }
+                      `}
+                    disabled={isDisabled}
                   >
                     update
+                    {isDisabled && (
+                      <CiNoWaitingSign className="text-[1.2rem] text-black" />
+                    )}
                   </button>
                 </div>
               );

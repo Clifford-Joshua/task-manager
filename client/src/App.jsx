@@ -25,15 +25,15 @@ const App = () => {
             index
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Task />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/task"
+            path="/dashboard"
             element={
               <ProtectedRoute>
-                <Task />
+                <Dashboard />
               </ProtectedRoute>
             }
           />

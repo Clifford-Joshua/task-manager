@@ -25,7 +25,7 @@ const SideBar = () => {
     >
       <div className="text-white flex flex-col gap-[1rem] p-[1rem]">
         <Link
-          to={"/"}
+          to={"/dashboard"}
           onClick={() => dispatch(closeSideBar())}
           className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
         >
@@ -35,7 +35,7 @@ const SideBar = () => {
         </Link>
 
         <Link
-          to={"/task"}
+          to={"/"}
           onClick={() => dispatch(closeSideBar())}
           className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
         >

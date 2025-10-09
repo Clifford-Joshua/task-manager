@@ -10,7 +10,7 @@ const getTask = async (req, res) => {
   const tasks = await Task.find({
     $or: [{ createdBy: req.user.userId }, { assignedTo: req.user.userId }],
   })
-    .populate("createdBy", "name") 
+    .populate("createdBy", "name")
     .populate("assignedTo", "name")
     .sort("createdAt");
 
@@ -68,7 +68,7 @@ const updateTask = async (req, res) => {
     throw new BadRequestError(`No task with id : ${taskId}`);
   }
 
-  if (assignedTo !== userID) {
+  if (assignedTo.toString() !== userID) {
     throw new BadRequestError("You are not authorized to update this task");
   }
 
@@ -91,8 +91,8 @@ const deleteTask = async (req, res) => {
     throw new BadRequestError(`No task with id : ${taskId}`);
   }
 
-  if (assignedTo !== userID) {
-    throw new BadRequestError("You are not authorized to update this task");
+  if (assignedTo.toString() !== userID) {
+    throw new BadRequestError("You are not authorized to delete this task");
   }
 
   const task = await Task.deleteOne({ _id: taskId });
