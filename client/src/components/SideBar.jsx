@@ -7,6 +7,7 @@ import { FaUser } from "react-icons/fa";
 import { FaTasks, FaUserEdit } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { FaGear } from "react-icons/fa6";
 
 import { closeSideBar } from "../Features/useStateSlice";
 
@@ -83,6 +84,16 @@ const SideBar = () => {
             <h2 className="  text-[1.1rem]  ">Login</h2>
           </Link>
         )}
+
+        <Link
+          to={"/setting"}
+          className="flex items-center gap-[1rem] py-[1rem]  rounded-[10px]  transition duration-500 ease-in-out hover:text-black hover:bg-white hover:px-[1.2rem] cursor-pointer"
+          onClick={() => dispatch(closeSideBar())}
+        >
+          <FaGear className="text-[1.3rem]" />
+
+          <h2 className="  text-[1.1rem]  ">Setting And Privacy</h2>
+        </Link>
       </div>
     </Wrapper>
   );

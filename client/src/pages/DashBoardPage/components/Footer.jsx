@@ -7,7 +7,7 @@ const Footer = () => {
     <Wrapper>
       <div className="py-[1rem] flex flex-col justify-center items-center gap-[1rem] md:pb-[1.5rem] text-center">
         <Link
-          to={"/task"}
+          to={"/"}
           className="border px-[1.5rem] py-[0.6rem] rounded-[8px]   bg-[#2563eb] text-white  transition duration-500 ease-in-out hover:bg-[#211be2] border-[#211be2] hover:shadow-[0_0_25px_2px_#00000082]"
         >
           View Task

@@ -10,7 +10,7 @@ import {
   setReRender,
 } from "../../../Features/useStateSlice";
 
-const url = import.meta.env.VITE_L0CAL_HOST_5000_Task_API_BACKEND_URL;
+const url = import.meta.env.VITE_Task_API_BACKEND_URL;
 
 const Update = () => {
   const dispatch = useDispatch();
@@ -133,7 +133,7 @@ const Update = () => {
               id="dueDate"
               value={newUpdate.dueDate}
               onChange={handleChange}
-              className="border border-gray-200 rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
+              className="border border-gray-200 px-[1rem] rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
             />
           </div>
 
@@ -149,7 +149,7 @@ const Update = () => {
               id="title"
               value={newUpdate.title}
               onChange={handleChange}
-              className="border border-gray-200 rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
+              className="border border-gray-200 px-[1rem] rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
             />
           </div>
 
@@ -165,7 +165,7 @@ const Update = () => {
               id="description"
               value={newUpdate.description}
               onChange={handleChange}
-              className="border h-[15vh] border-gray-200 rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
+              className="border h-[15vh] border-gray-200 rounded-[10px] p-[0.3rem] bg-gray-200 px-[1rem] text-black"
             />
           </div>
 

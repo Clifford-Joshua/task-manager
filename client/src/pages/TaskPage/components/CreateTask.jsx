@@ -11,8 +11,8 @@ import {
 } from "../../../Features/useStateSlice";
 import { useEffect } from "react";
 
-const url = import.meta.env.VITE_L0CAL_HOST_5000_Task_API_BACKEND_URL;
-const baseApi = import.meta.env.VITE_L0CAL_HOST_5000_API_BACKEND_URL;
+const url = import.meta.env.VITE_Task_API_BACKEND_URL;
+const baseApi = import.meta.env.VITE_API_BACKEND_URL;
 
 const CreateTask = () => {
   const dispatch = useDispatch();
@@ -157,7 +157,7 @@ const CreateTask = () => {
               name="title"
               value={taskDetails.title}
               onChange={handleChange}
-              className="border border-gray-200 rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
+              className="border border-gray-200 px-[1rem] rounded-[10px] p-[0.3rem]  bg-gray-200 text-black"
             />
           </div>
 
@@ -187,7 +187,7 @@ const CreateTask = () => {
               name="description"
               value={taskDetails.description}
               onChange={handleChange}
-              className="border h-[15vh] border-gray-200 rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
+              className="border h-[15vh] border-gray-200 px-[1rem] rounded-[10px] p-[0.3rem] bg-gray-200 text-black"
             />
           </div>
 
@@ -224,13 +224,17 @@ const CreateTask = () => {
                 className="p-[0.5rem] rounded-[5px] bg-white border border-gray-300 focus:outline-none focus:ring-1 focus:ring-black-500 w-[100%] focus:border-black transition duration-300 ease-in-out "
               >
                 <option value=""></option>
-                {user.map(({ name }, ind) => {
-                  return (
-                    <option value={name} key={ind}>
-                      {name}
-                    </option>
-                  );
-                })}
+                {user
+                  .filter(
+                    (item) => item.name !== localStorage.getItem("username")
+                  )
+                  .map(({ name }, ind) => {
+                    return (
+                      <option value={name} key={ind}>
+                        {name}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
           )}

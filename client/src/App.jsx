@@ -12,6 +12,7 @@ import {
   Login,
   SignUp,
   ForgottenPassword,
+  Setting,
 } from "./pages";
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/setting" element={<Setting />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

@@ -10,11 +10,11 @@ import { CiNoWaitingSign } from "react-icons/ci";
 
 import {
   toggleUpdateTaskModal,
-  setTotalTask,
   setReRender,
+  filterTotalTask,
 } from "../../../Features/useStateSlice";
 
-const url = import.meta.env.VITE_L0CAL_HOST_5000_Task_API_BACKEND_URL;
+const url = import.meta.env.VITE_Task_API_BACKEND_URL;
 
 const TaskCard = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,9 @@ const TaskCard = () => {
   const [TaskData, setTaskData] = useState([]);
   const [Loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { reRender } = useSelector((store) => store.stateSlice);
+  const { reRender, filterByStatus, filterByExecutor } = useSelector(
+    (store) => store.stateSlice
+  );
 
   const HandleFetch = async () => {
     try {
@@ -38,7 +40,6 @@ const TaskCard = () => {
 
       // =============================================
       // dynamic set the total number of count
-      dispatch(setTotalTask(count));
 
       if (count === 0) {
         setError(true);
@@ -48,7 +49,48 @@ const TaskCard = () => {
         setErrorMessage("");
       }
 
-      setTaskData(tasks);
+      const filterTasks = tasks.filter((item) => {
+        const byStatus =
+          filterByStatus === "all" || item.status === filterByStatus;
+        const byExecutor =
+          filterByExecutor === "all" || item.executedBy === filterByExecutor;
+        return byStatus && byExecutor;
+      });
+
+      setTaskData(filterTasks);
+
+      const pendingTask = tasks.filter(
+        (task) => task.status === "pending"
+      ).length;
+
+      const RejectedTask = tasks.filter(
+        (task) => task.status === "rejected"
+      ).length;
+
+      const CompletedTask = tasks.filter(
+        (task) => task.status === "completed"
+      ).length;
+
+      const InProgressTask = tasks.filter(
+        (task) => task.status === "in progress"
+      ).length;
+
+      const totalFilterTasks = filterTasks.length;
+
+      dispatch(filterTotalTask(totalFilterTasks));
+
+      // ==========================================================================
+      // setting the status to local storage so it can be accessible from anywhere
+      localStorage.setItem(
+        "taskStats",
+        JSON.stringify({
+          total: count,
+          pending: pendingTask,
+          completed: CompletedTask,
+          inProgress: InProgressTask,
+          rejected: RejectedTask,
+        })
+      );
     } catch (err) {
       // ✅ error toast
 

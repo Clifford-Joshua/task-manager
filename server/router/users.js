@@ -19,6 +19,9 @@ router.route("/register").post(createUser);
 
 router.route("/forgotten-password").post(forgottenPassword);
 
-router.route("/:id").patch(authentication, updateUser).delete(deleteUser);
+router
+  .route("/:id")
+  .patch(authentication, updateUser)
+  .delete(authentication, deleteUser);
 
 module.exports = router;

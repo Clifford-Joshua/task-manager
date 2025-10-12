@@ -91,14 +91,19 @@ const updateUser = async (req, res) => {
     throw new BadRequestError("Please provide at least one field to update.");
   }
 
-  const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
-    new: true,
-    runValidators: true,
-  });
-
+  // ✅ Use findById so we can trigger pre-save middleware (password hashing)
+  const user = await User.findById(userId);
   if (!user) {
     throw new BadRequestError(`No user found with id: ${userId}`);
   }
+
+  // ✅ Update only provided fields
+  Object.keys(req.body).forEach((key) => {
+    user[key] = req.body[key];
+  });
+
+  // ✅ Trigger pre('save') hook (hashes password if changed)
+  await user.save();
 
   res
     .status(StatusCodes.OK)
@@ -126,7 +131,10 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+  res.status(StatusCodes.OK).json({
+    user: { name: user.name, email: user.email, Id: user._id },
+    token,
+  });
 };
 
 const forgottenPassword = async (req, res) => {

@@ -1,8 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 const TaskSummary = () => {
-  const { TotalTask } = useSelector((store) => store.stateSlice);
+  const TotalTask = JSON.parse(localStorage.getItem("taskStats"));
 
   return (
     <Wrapper>
@@ -12,30 +11,30 @@ const TaskSummary = () => {
             Task Summary
           </h2>
 
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-[1rem] mt-[1rem] text-white">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-[1rem] mt-[1rem] text-white">
             <div className="flex border rounded-[10px] p-[1rem] justify-center items-end md:items-center gap-[0.5rem] bg-[#4B5563]">
               <h2 className="font-bold text-[1.1rem]">Total Task : </h2>
-              <p className="text-[1.2rem]">{TotalTask} </p>
+              <p className="text-[1.2rem]">{TotalTask.total} </p>
             </div>
 
             <div className="flex border rounded-[10px] p-[1rem] justify-center items-end md:items-center gap-[0.5rem] bg-orange-400">
-              <h2 className="font-bold text-[1.1rem]">Total Task : </h2>
-              <p className="text-[1.2rem]"> 10 </p>
+              <h2 className="font-bold text-[1.1rem]">Task In Progress : </h2>
+              <p className="text-[1.2rem]"> {TotalTask.inProgress} </p>
             </div>
 
             <div className="flex border rounded-[10px] p-[1rem] justify-center items-end md:items-center gap-[0.5rem] bg-[#FACC15]">
-              <h2 className="font-bold text-[1.1rem]">Total Task : </h2>
-              <p className="text-[1.2rem]"> 10 </p>
+              <h2 className="font-bold text-[1.1rem]">Pending Task : </h2>
+              <p className="text-[1.2rem]"> {TotalTask.pending} </p>
             </div>
 
             <div className="flex border rounded-[10px] p-[1rem] justify-center items-end md:items-center gap-[0.5rem] bg-red-500">
-              <h2 className="font-bold text-[1.1rem]">Total Task : </h2>
-              <p className="text-[1.2rem]"> 10 </p>
+              <h2 className="font-bold text-[1.1rem]">Rejected Task : </h2>
+              <p className="text-[1.2rem]"> {TotalTask.rejected} </p>
             </div>
 
             <div className="flex border rounded-[10px] p-[1rem] justify-center items-end md:items-center gap-[0.5rem] bg-[#008000]">
-              <h2 className="font-bold text-[1.1rem]">Total Task : </h2>
-              <p className="text-[1.2rem]"> 10 </p>
+              <h2 className="font-bold text-[1.1rem]">Completed Task : </h2>
+              <p className="text-[1.2rem]"> {TotalTask.completed} </p>
             </div>
           </div>
         </div>

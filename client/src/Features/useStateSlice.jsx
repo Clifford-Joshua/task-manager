@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   reRender: 0,
-  TotalTask: 0,
+  filterTotal: 0,
   isSideBarOpen: false,
   filterByStatus: "all",
   filterByExecutor: "all",
@@ -35,8 +35,8 @@ const useStateSlice = createSlice({
     setReRender: (state) => {
       state.reRender = Math.random() * 100000;
     },
-    setTotalTask: (state, action) => {
-      state.TotalTask = action.payload;
+    filterTotalTask: (state, action) => {
+      state.filterTotal = action.payload;
     },
     toggleUpdateTaskModal: (state) => {
       state.isUpdateTaskModalOpen = !state.isUpdateTaskModalOpen;
@@ -50,7 +50,7 @@ export const {
   filterExecutor,
   filterStatus,
   setReRender,
-  setTotalTask,
+  filterTotalTask,
   openCreateTaskModal,
   closeCreateTaskModal,
   toggleUpdateTaskModal,

@@ -4,7 +4,7 @@ const User = require("../model/userSchema");
 const { StatusCodes } = require("http-status-codes");
 
 const { BadRequestError } = require("../errors");
-const { default: mongoose } = require("mongoose");
+// const { default: mongoose } = require("mongoose");
 
 const getTask = async (req, res) => {
   const tasks = await Task.find({

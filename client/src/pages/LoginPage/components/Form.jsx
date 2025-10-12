@@ -63,6 +63,8 @@ const Form = () => {
 
       sessionStorage.setItem("user", true);
       localStorage.setItem("username", data.user.name);
+      localStorage.setItem("userEmail", data.user.email);
+      localStorage.setItem("userId", data.user.Id);
       localStorage.setItem("token", data.token);
 
       toast.success("Login successful");
