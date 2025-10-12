@@ -169,7 +169,7 @@ const Form = () => {
             className="border py-[0.5rem] mt-[1rem] font-bold text-[1rem] rounded-[5px] bg-blue-600 text-white hover:bg-blue-700 cursor-pointer transition duration-300 ease-in-out capitalize"
             type="submit"
           >
-            {isLoading ? "Loading ..... " : "Login"}
+            {isLoading ? "Loading ....... " : "Login"}
           </button>
 
           {/* =========================================================================== */}
