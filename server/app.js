@@ -17,7 +17,7 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://clifford-joshua.netlify.app"],
+    origin: ["http://localhost:5173", "https://taskly-board.netlify.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
