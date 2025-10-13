@@ -19,7 +19,7 @@ const SideBar = () => {
 
   return (
     <Wrapper
-      className={`absolute h-[90vh] md:h-[91vh] lg:h-[88vh] w-[100%] md:w-[50%] lg:w-[30%] bg-gray-800 transition-all  duration-700 ease-in-out
+      className={`absolute h-[90vh] md:h-[91vh] lg:h-[88vh] w-[100%] md:w-[50%] lg:w-[30%] bg-gray-800 transition-all  duration-700 ease-in-out z-[999]
         
         ${isSideBarOpen ? "translate-x-0 " : "translate-x-[-100%]"}
           `}

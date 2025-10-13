@@ -1,6 +1,33 @@
 import React from "react";
 import styled from "styled-components";
+import ChartComponent from "../../../components/Pie2dChart";
+import Pie3dChartComponent from "../../../components/Pie3dChart";
 const TaskAnalytics = () => {
+  const { pending, inProgress, completed, rejected } = JSON.parse(
+    localStorage.getItem("taskStats")
+  );
+
+  const chart2dData = [
+    {
+      label: "In Progress",
+      value: `${inProgress}`,
+    },
+    {
+      label: "Completed",
+      value: `${completed}`,
+    },
+  ];
+  const chart3dData = [
+    {
+      label: "Pending",
+      value: `${pending}`,
+    },
+    {
+      label: "Rejected",
+      value: `${rejected}`,
+    },
+  ];
+
   return (
     <Wrapper>
       <div>
@@ -9,20 +36,20 @@ const TaskAnalytics = () => {
             <h2 className="text-[1.2rem] md:text-[1.3rem] font-bold">
               Task Analytics
             </h2>
-            <p className="text-[0.9rem]">
-              Work Progress (In Progress Vs Completed)
-            </p>
 
-            <div className="h-[40vh] border bg-black"></div>
+            <div>
+              <ChartComponent data={chart2dData} />
+            </div>
           </div>
 
           <div className="flex flex-col gap-[0.5rem] md:w-[50%]">
             <h2 className="text-[1.2rem] md:text-[1.3rem] font-bold">
               Task Status
             </h2>
-            <p className="text-[0.9rem]">Task Status (Pending vs Rejected)</p>
 
-            <div className="h-[40vh] border bg-black"></div>
+            <div>
+              <Pie3dChartComponent data={chart3dData} />
+            </div>
           </div>
         </div>
       </div>
